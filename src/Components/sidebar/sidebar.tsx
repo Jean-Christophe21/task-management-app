@@ -1,31 +1,34 @@
+import {NavLink} from "react-router-dom";
+
 export default function Sidebar() {
     const items = [
         {
             label: "dashboard",
-            link: "/",
+            to: "/",
             icon: "dashboard"
         },
         {
             label: "tasks",
-            link: "/tasks",
+            to: "/tasks",
             icon: "tasks"
         }
     ]
     return (
         <div className={"sidebar-layout"}>
-            <div className={"sidebar-nav"}>
-                {
-                    items.map(item =>(
-                        <li key={item.label}>
-                            <link rel="stylesheet" className={"sidebar-item-link"} href={item.link}>
-                                <i className={"sidebar-item-icon"}></i>
-                                <span className={"sidebar-item-text"}>{item.label}</span>
-                            </link>
-                        </li>
-                    ))
-                }
-            </div>
+            <nav className={"sidebar-nav"}>
+                {items.map(item => (
+                    <NavLink
+                        key={item.label}
+                        to={item.to}
+                        className={({isActive}) =>
+                            isActive ? "sidebar-item-link active" : "sidebar-item-link"
+                        }
+                    >
+                        <i className={"sidebar-item-icon"}></i>
+                        <span className={"sidebar-item-text"}>{item.label}</span>
+                    </NavLink>
+                ))}
+            </nav>
         </div>
-
-)
+    )
 }
