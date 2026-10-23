@@ -1,7 +1,7 @@
 import type {Task} from "../../types/task.ts";
 
 
-export function TaskDetails(task: Task) {
+export default function TaskDetails(task: Task) {
     return (
         <div className={"task-details"}>
             <section className={"task-details-title-section"}>
