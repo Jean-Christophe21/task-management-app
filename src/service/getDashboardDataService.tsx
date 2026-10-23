@@ -10,19 +10,27 @@ type DashboardData = {
 
 export async function getDashboardData(): Promise<DashboardData> {
     try {
-    const data: Task[] = await getTasksList();
+    const dataResponse: Task[] = await getTasksList();
 
-    const total = data.length;
-    const totalTodo = data.filter((task) => task.status === taskStatus.todo).length;
-    const totalInProgress = data.filter((task) => task.status === taskStatus.in_progress).length;
-    const totalDone = data.filter((task) => task.status === taskStatus.done).length;
+        if (Array.isArray(dataResponse?.data)) {
+            const data = dataResponse.data;
 
-    return {
-        total,
-        totalTodo,
-        totalInProgress,
-        totalDone,
-    };
+            console.log("data : ", data);
+
+            const total = data.length;
+            const totalTodo = data.filter((task: Task) => task.status === taskStatus.todo).length;
+            const totalInProgress = data.filter((task: Task) => task.status === taskStatus.in_progress).length;
+            const totalDone = data.filter((task: Task) => task.status === taskStatus.done).length;
+            return {
+                total,
+                totalTodo,
+                totalInProgress,
+                totalDone,
+            };
+        }
+
+
+
   } catch (error) {
     console.error(error);
     return {
