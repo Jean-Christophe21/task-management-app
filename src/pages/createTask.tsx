@@ -1,6 +1,7 @@
 import TaskForm from "../Components/tasks/taskForm.tsx";
 import {StoreTask} from "../service/storeTaskService.tsx";
 import type {TaskFormData} from "../Components/tasks/taskForm.tsx";
+import { useNavigate } from "react-router-dom";
 //import {useState} from "react";
 
 
@@ -13,14 +14,20 @@ import type {TaskFormData} from "../Components/tasks/taskForm.tsx";
 // }
 
 export default function CreateTaskPage() {
+    const navigate = useNavigate();
     const onSubmit = async (formData: TaskFormData) => {
         try {
             const response = await StoreTask(formData);
 
             if (response.status === 200 || response.status === 201) {
                 console.log("Store witch success :", response.data);
+                const createdTask = response.data;
 
-                /// mettre en place le routing vers la page d'affichage avec taskDetails.
+                const taskId = createdTask.id ?? createdTask.task?.id;
+
+                if (taskId) {
+                    navigate(`/tasks/${taskId}`);
+                }
             }
         } catch (error) {
             console.error("Erreur lors de la création de la tâche :", error);
@@ -29,7 +36,6 @@ export default function CreateTaskPage() {
 
     return (
         <div className="container">
-
             <TaskForm onSubmit={onSubmit} />
         </div>
     );
