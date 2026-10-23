@@ -29,3 +29,8 @@ export async function getTasksListsFromSearchAndStatusAndPriority(search: string
             task.description !== undefined ? task.description.toLowerCase().includes(search.toLowerCase()): false)
     ];
 }
+
+export async function getTaskById(id: number) {
+    const task = await httpService.get(`/tasks/${id}`);
+    return task.data;
+}
