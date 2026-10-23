@@ -1,23 +1,21 @@
-// import { useState } from 'react'
-// import heroImg from './assets/hero.png'
-// import reactLogo from './assets/react.svg'
-// import viteLogo from './assets/vite.svg'
 import './App.css'
-import httpService from "./service/httpService.ts";
-
-
-async function displayTasks(){
-  const response = await httpService.get("/tasks");
-  console.log("response:", response.data.data);
-}
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import PageLayout from "./Components/layouts/PageLayout";
+import Dashboard from "./pages/Dashboard";
+import CreateTaskPage from "./pages/createTask";
 
 function App() {
   //const [count, setCount] = useState(0)
 
   return (
-    <>
-      <button onClick={displayTasks}>Display Tasks</button>
-    </>
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<PageLayout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="tasks/" element={<CreateTaskPage />} />
+              </Route>
+          </Routes>
+      </BrowserRouter>
   )
 }
 
